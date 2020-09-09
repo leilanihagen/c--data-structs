@@ -119,6 +119,18 @@ bool BST::Contains(struct Node* root, int number){
   }
 }
 
+int BST::GetInOrderSuccessor(){
+  if(root->right != NULL){
+    return RetrieveSuccessor(root->right);
+  }
+}
+int BST::RetrieveSuccessor(Node* rootRight){
+  if(rootRight->left == NULL){
+    return rootRight->data;
+  }
+  return RetrieveSuccessor(rootRight->left);
+}
+
 BST BST::Duplicate(){
   return BST(Duplicate(root));
 }
@@ -182,6 +194,39 @@ struct BST::LLNode* BST::GetLLTail(struct LLNode* head){
     return head;
   }
   return (GetLLTail(head->next));
+}
+
+BST BST::FromArray(int arr[], int len){
+  BST newTree;
+  newTree.root = CreateRoot(arr, 0, (len - 1));
+  return newTree;
+}
+struct BST::Node* BST::CreateRoot(int arr[], int start, int stop){
+  int mid;
+  if(stop % 2 != 0){
+    mid = (stop-1)/2;
+  }
+  else{
+    mid = stop/2;
+  }
+  
+
+  struct Node* root = new Node;
+  root->data = arr[mid];
+  if(abs(start - stop) <= 3){
+    root->left = CreateRoot(arr, start, mid);
+    root->right = CreateRoot(arr, mid, stop);
+  }
+  else{
+    // range/dist <=3, so we must assemble a structure from this and return:
+    // If range == 3:
+    //
+
+
+    root->left = NULL;
+    root->right = NULL;
+  }
+  return root;
 }
 
 void BST::PreOrderTraverse(){

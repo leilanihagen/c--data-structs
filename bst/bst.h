@@ -18,9 +18,11 @@ class BST{ // Rewrite class as a node type instead of having bst, then all funct
   struct BST::Node* SimpleDelete(struct Node* searchNode, int number);
   int diffValFromNodeData(struct Node* node, int val);
   bool Contains(struct Node* root, int number);
+  int RetrieveSuccessor(Node* rootRight);
   struct BST::Node* Duplicate(struct Node* root); // Class not in scope until func. args.
   struct BST::LLNode* ToSortedLinkedList(struct Node* root);
   struct BST::LLNode* GetLLTail(struct LLNode* head);
+  struct BST::Node* CreateRoot(int arr[], int start, int stop);
   void LRN(struct Node* root);
   void NLR(struct Node* root);
   void LNR(struct Node* root);
@@ -31,8 +33,10 @@ class BST{ // Rewrite class as a node type instead of having bst, then all funct
   void Add(int number);
   void Delete(int number);
   bool Contains(int number);
+  int GetInOrderSuccessor();
   BST Duplicate();
   void PrintFromSortedLL();
+  BST FromArray(int arr[], int len);
   void PostOrderTraverse();
   void PreOrderTraverse();
   void InOrderTraverse();

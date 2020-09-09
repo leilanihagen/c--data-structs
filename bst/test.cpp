@@ -8,14 +8,18 @@ int main(){
   myTree.Add(8);
   myTree.Add(3);
   myTree.Add(9);
-//  myTree.Add(12);
-//  myTree.Add(11);
-//  myTree.Add(1);
-//  myTree.Add(5);
-//  myTree.Add(4);
+  myTree.Add(12);
+  myTree.Add(11);
+  myTree.Add(1);
+  myTree.Add(5);
+  myTree.Add(4);
 
-  BST myDupe = myTree.Duplicate();
-  myDupe.InOrderTraverse();
+  int arr[] = {1,2,3,4,5,6,7,8,9};
+  BST t2 = myTree.FromArray(arr, 9);
+
+//  BST myDupe = myTree.Duplicate();
+//  myDupe.InOrderTraverse();
+//  std::cout << myDupe.GetInOrderSuccessor() << std::endl;
 
 // myTree.Delete(3);
 // myTree.PrintFromSortedLL(); 
