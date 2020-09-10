@@ -5,9 +5,9 @@ namespace LL{
 
 LLNode::LLNode(int val) : data(val), next(NULL), headDataNeedsInit(false) {}
 LLNode::LLNode() : data(), next(NULL), headDataNeedsInit(true) {}
-LLNode::~LLNode(){
-  DestroyList(this); // LEFT OFF FRIDAY
-}
+//LLNode::~LLNode(){
+//  DestroyList(this); // LEFT OFF FRIDAY
+//}
 void LLNode::Append(int data){
   if(headDataNeedsInit){
     this->data = data;
@@ -26,7 +26,7 @@ void LLNode::Append(LLNode* node, int data){
     Append(node->next, data);
   }
 }
-void LLNode::DestroyList(){
+void LLNode::DestroyThisList(){
   DestroyList(this->next);
 }
 void LLNode::DestroyList(LLNode* node){

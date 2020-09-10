@@ -9,6 +9,8 @@ LLNode* LLFromArray(int* array, int size);
 void Count2sMain();
 int Count2sLL(LLNode* node, int twoCount);
 int Count2sArrayOfLL(LLNode** array,int twoCount, int arraySize);
+void DeleteLastList();
+void Destroy(LLNode* node);
 
 LLNode* CreateRandomLL(int numberNodes){
   std::random_device rd;
@@ -92,17 +94,42 @@ int Count2sArrayOfLL(LLNode** array,int twoCount, int arraySize){
 
 void DeleteLastList(){
 
+  int s = 4;
+  LLNode* llArray[s];
 
+  LLNode* ll1 = new LLNode(1);
+  ll1->next = new LLNode(5);
+  ll1->next->next = new LLNode(422);
+
+  LLNode* ll2 = new LLNode(0);
+
+  LLNode* ll3 = new LLNode(1);
+  ll3->next = new LLNode(2);
+  ll3->next->next = new LLNode(3);
+  ll3->next->next->next = new LLNode(4);
+  ll3->next->next->next->next = new LLNode(5);
+
+  LLNode* ll4 = new LLNode;
+
+  llArray[0] = ll1;
+  llArray[1] = ll2;
+  llArray[2] = ll3;
+  llArray[3] = ll4;
+
+  Destroy(ll3);
 }
 
-void DestroyList(LLNode* node){
+void Destroy(LLNode* node){
   if(node == NULL){
     return;
   }
-  if(node->next != NULL){
-    DestroyList(node->next);
-  }
+  LLNode* temp = node->next;
+//  delete node;
+  Destroy(node->next);
+  std::cout << node->data << std::endl;
   delete node;
+  return;
+//  node = NULL;
 }
 LLNode* LLFromArray(int array[], int size){
   LLNode* head = new LLNode(array[0]);
@@ -122,7 +149,8 @@ LLNode* LLFromArray(int array[], int size){
 
 int main(){
 
-  Count2sMain();
+//  Count2sMain();
+  DeleteLastList();
 //  int s = 5;
 //  LLNode* llArray[s];
 //

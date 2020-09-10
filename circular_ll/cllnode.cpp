@@ -27,11 +27,10 @@ CLL::~CLL(){
 }
 void CLL::DestroyList(CLLNode* head, CLLNode* tail){
   if(head != tail){
-    DestroyList(head->next);
+    DestroyList(head->next, tail);
   }
   delete head;
 }
-
 
 CLL::CLL(const CLL& object){
   CLL* newList = new CLL;
@@ -43,34 +42,43 @@ CLL::CLL(const CLL& object){
   else{
     newList->tailDataNeedsInit = false;
   }
-  newList->tail = DuplicateList(object.tail->next, object.tail);
+  newList->tail = DuplicateList(object.tail);
 }
 
-CLL::CLLNode* CLL::DuplicateList(CLLNode* objHead, CLLNode* objTail){
+CLL::CLLNode* CLL::DuplicateList(CLLNode* objTail){
+  CLLNode* objHead = objTail->next;
   // Manually create newList's tail:
-  newList->tail = new CLLNode;
-  newList->tail->data = objTail->data;
+  CLLNode* newTail = new CLLNode;
+  newTail->data = objTail->data;
   // Pass tail into implementation function:
-  newList->tail->next = DuplicateListImpl(objHead, objTail, newList->tail);
-  return newList;
+  newTail->next = DuplicateListImpl(objHead, objTail, newTail);
+  return newTail;
 }
 CLL::CLLNode* CLL::DuplicateListImpl(CLLNode* objHead, CLLNode* objTail, CLLNode* newObjTail){
   CLLNode*& traverser = objHead;
   if(traverser != objTail){
     CLLNode* newNode = new CLLNode;
     newNode->data = traverser->data;
-    newNode->next = DuplicateList(traverser->next, objTail, newObjTail);
+    newNode->next = DuplicateListImpl(traverser->next, objTail, newObjTail);
     return newNode;
   }
   else{
     return newObjTail;
   }
 }
-CLLNode::CLLNode& operator=(const CLLNode& object){
+CLL& CLL::operator=(const CLL& object){
 //  CLL* buffer = new CLL;
 //  buffer->tail = object.tail;
+  // Make sure not assigning to self:
+  if(object == self){ // Superfluous but good so don't create whole new list in mem.
+    return *this;
+  }
 
-
+// Create new list:
+  CLL* newList = new CLL;
+  newList->tail = DuplicateList(object.tail);
+  DestroyList(object.tail->next, object.tail);
+  return *this;  
 }
   
 //CLLNode::~CLLNode(){

@@ -8,10 +8,10 @@ class LLNode{
   int data;
   LLNode* next;
   LLNode();
-  ~LLNode();
+//  ~LLNode();
   LLNode(int data);
   void Append(int data);
-  void DestroyList();
+  void DestroyThisList();
   void PrintNodes();
 };
 }

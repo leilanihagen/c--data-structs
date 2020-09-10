@@ -209,17 +209,25 @@ struct BST::Node* BST::CreateRoot(int arr[], int start, int stop){
   else{
     mid = stop/2;
   }
-  
-
   struct Node* root = new Node;
   root->data = arr[mid];
-  if(abs(start - stop) <= 3){
+  if(abs(start - stop) = 3){
+    // Base case, if range == 3 assemble height 2 baby tree:
+    root->left = new Node;
+    root->right = new Node;
+    root->left->data = arr[mid-1];
+    root->right->data = arr[mid+1];
+  }
+  if(abs(start - stop) = 2){
+    // Base case, range == 2 assemble height 2 baby tree:
+    int rootVal;
+    if(arr[mid
+
     root->left = CreateRoot(arr, start, mid);
     root->right = CreateRoot(arr, mid, stop);
   }
   else{
     // range/dist <=3, so we must assemble a structure from this and return:
-    // If range == 3:
     //
 
 
