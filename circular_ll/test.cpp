@@ -10,7 +10,7 @@ int main(){
   myList.Prepend(7);
   myList.Prepend(6);
   myList.PrintNodes();
-  myList.DuplicateList(myList.tail->next, myList.tail);
+  myList.DuplicateList(myList.tail);
 //  myList.RemoveMiddleNodes();
 //  CLL l2 = CLL(myList);
   std::cout << std::endl;

@@ -6,8 +6,9 @@ int main(){
 //  l->Append("haha");
   l->AppendUnique("haha");
   l->AppendUnique("haha");
-  STRLLNode l2 = l->DuplicateList();
-  l2.DestroyThisList();
+  l->MoveTailToHead();
+//  STRLLNode l2 = l->DuplicateList();
+//  l2.DestroyThisList();
 //  l->Append(55);
   l->PrintNodes();
 //  l2.PrintNodes();

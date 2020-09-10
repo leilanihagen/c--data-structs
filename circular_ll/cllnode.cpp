@@ -70,14 +70,15 @@ CLL& CLL::operator=(const CLL& object){
 //  CLL* buffer = new CLL;
 //  buffer->tail = object.tail;
   // Make sure not assigning to self:
-  if(object == self){ // Superfluous but good so don't create whole new list in mem.
+  if(this == &object){ // Superfluous but good so don't create whole new list in mem.
     return *this;
   }
 
 // Create new list:
   CLL* newList = new CLL;
   newList->tail = DuplicateList(object.tail);
-  DestroyList(object.tail->next, object.tail);
+  DestroyList(this->tail->next, this->tail);
+  this->tail = newList->tail;
   return *this;  
 }
   

@@ -12,10 +12,14 @@ class STRLLNode{
   STRLLNode();
 //  ~STRLLNode();
   STRLLNode(const char data[]);
+//  STRLLNode& operator=(const STRLLNode& object);
+//  STRLLNode(const STRLLNode& object);
   STRLLNode DuplicateList();
   void Append(const char data[]);
   void DestroyThisList();
   void PrintNodes();
   int AppendUnique(const char str[]);
+  void MoveTailToHead();
+  STRLLNode* GetSecondToLast(STRLLNode* node);
 };
 }

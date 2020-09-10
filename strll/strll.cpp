@@ -13,17 +13,29 @@ STRLLNode::STRLLNode(const char str[]){
   return;
 }
 STRLLNode::STRLLNode() : data(), next(NULL), headDataNeedsInit(true) {}
-
-//STRLLNode& STRLLNode::operator=(const STRLLNode& object){
-  // Check if this == object, if so return
-  // Create buffer copy of list
-//  STRLLNode* listCopy = DuplicateList(this);
-  // Delete this list
-  // Set *this = buffer copy
-  //return *this
-
 //STRLLNode::~STRLLNode(){
-//  DestroyList(this); // LEFT OFF FRIDAY
+//  DestroyList(this);
+//}
+//STRLLNode& STRLLNode::operator=(const STRLLNode& object){
+//  STRLLNode& nonConstObj = (STRLLNode&)object;
+//  // Check if this == object, if so return
+//  // Create buffer copy of list "object"
+//  if(this != &object){
+//    DestroyList(this);
+//    this = DuplicateList(&nonConstObj);
+//    return *this;
+//   }
+////  STRLLNode* listCopy = DuplicateList(&nonConstObj);
+////  // Delete this list
+////  DestroyList(this);
+////  // Set *this = buffer copy
+////  this = listCopy;
+////  //return *this
+////  return *this;
+//}
+//STRLLNode::STRLLNode(const STRLLNode& object){
+//  STRLLNode& nonConstObj = (STRLLNode&)object;
+//  this = DuplicateList(&nonConstObj);
 //}
 
 STRLLNode STRLLNode::DuplicateList(){
@@ -109,6 +121,27 @@ int STRLLNode::AppendUnique(STRLLNode* node, char str[]){
   }
 
   AppendUnique(node->next, str);
+}
+
+void STRLLNode::MoveTailToHead(){
+  if(this == NULL or this->next == NULL){
+    // Nothing to move, list contains 1 node.
+    return;
+  }
+
+  STRLLNode* oldHead = this;
+  STRLLNode* secondToLast = GetSecondToLast(this);
+  STRLLNode* newHead = secondToLast->next;
+  secondToLast->next = NULL; // New end of list.
+  newHead->next = oldHead;
+  this = newHead;
+}
+STRLLNode* STRLLNode::GetSecondToLast(STRLLNode* node){
+  // We know here that list has at least 2 nodes...
+  if(node->next->next == NULL){
+    return node;
+  }
+  return GetSecondToLast(node->next);
 }
 
 }
