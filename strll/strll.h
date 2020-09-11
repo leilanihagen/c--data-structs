@@ -13,8 +13,7 @@ class STRLL{
   void PrintNodes(STRLLNode* node);
   int AppendUnique(STRLLNode* node, char str[]);
   public:
-  char* data;
-  STRLLNode* next;
+  STRLLNode* head;
   STRLL();
 //  ~STRLL();
   STRLL(const char data[]);

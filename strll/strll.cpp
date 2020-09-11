@@ -1,47 +1,53 @@
 #include <iostream>
 #include <cstring>
-#include "strllnode.h"
+#include "strll.h"
 
 namespace DataStructs{
 
 STRLLNode::STRLLNode(const char str[]){
   char* dataNonConst = (char*)str;
-  this->data = new char[strlen(dataNonConst) + 1];
-  strncpy(this->data, dataNonConst, (strlen(dataNonConst) + 1));
-  this->next = NULL;
+  data = new char[strlen(dataNonConst) + 1];
+  strncpy(data, dataNonConst, (strlen(dataNonConst) + 1));
+  next = NULL;
+}
+STRLL::STRLL(const char str[]){
+  char* dataNonConst = (char*)str;
+  head->data = new char[strlen(dataNonConst) + 1];
+  strncpy(head->data, dataNonConst, (strlen(dataNonConst) + 1));
+  head->next = NULL;
   headDataNeedsInit = false;
   return;
 }
-STRLLNode::STRLLNode() : data(), next(NULL), headDataNeedsInit(true) {}
-//STRLLNode::~STRLLNode(){
-//  DestroyList(this);
+STRLL::STRLL() : data(), next(NULL), headDataNeedsInit(true) {}
+//STRLL::~STRLL(){
+//  DestroyList(head);
 //}
-//STRLLNode& STRLLNode::operator=(const STRLLNode& object){
-//  STRLLNode& nonConstObj = (STRLLNode&)object;
-//  // Check if this == object, if so return
+//STRLL& STRLL::operator=(const STRLL& object){
+//  STRLL& nonConstObj = (STRLL&)object;
+//  // Check if head == object, if so return
 //  // Create buffer copy of list "object"
-//  if(this != &object){
-//    DestroyList(this);
-//    this = DuplicateList(&nonConstObj);
-//    return *this;
+//  if(head != &object){
+//    DestroyList(head);
+//    head = DuplicateList(&nonConstObj);
+//    return *head;
 //   }
-////  STRLLNode* listCopy = DuplicateList(&nonConstObj);
-////  // Delete this list
-////  DestroyList(this);
-////  // Set *this = buffer copy
-////  this = listCopy;
-////  //return *this
-////  return *this;
+////  STRLL* listCopy = DuplicateList(&nonConstObj);
+////  // Delete head list
+////  DestroyList(head);
+////  // Set *head = buffer copy
+////  head = listCopy;
+////  //return *head
+////  return *head;
 //}
-//STRLLNode::STRLLNode(const STRLLNode& object){
-//  STRLLNode& nonConstObj = (STRLLNode&)object;
-//  this = DuplicateList(&nonConstObj);
+//STRLL::STRLL(const STRLL& object){
+//  STRLL& nonConstObj = (STRLL&)object;
+//  head = DuplicateList(&nonConstObj);
 //}
 
-STRLLNode STRLLNode::DuplicateList(){
-  return *DuplicateList(this);
+STRLL STRLL::DuplicateList(){
+  return *DuplicateList(head);
 }
-STRLLNode* STRLLNode::DuplicateList(STRLLNode* node){
+STRLLNode* STRLL::DuplicateList(STRLLNode* node){
   if(node == NULL){
     return NULL;
   }
@@ -51,18 +57,18 @@ STRLLNode* STRLLNode::DuplicateList(STRLLNode* node){
   return dupeNode;
 }
 
-void STRLLNode::Append(const char data[]){
+void STRLL::Append(const char data[]){
   char* dataNonConst = (char*)data;
   if(headDataNeedsInit){
-    this->data = new char[strlen(dataNonConst) + 1];
-    strncpy(this->data, dataNonConst, (strlen(dataNonConst) + 1));
-    this->next = NULL;
+    head->data = new char[strlen(dataNonConst) + 1];
+    strncpy(head->data, dataNonConst, (strlen(dataNonConst) + 1));
+    head->next = NULL;
     headDataNeedsInit = false;
     return;
   }
-  Append(this, dataNonConst);
+  Append(head, dataNonConst);
 }
-void STRLLNode::Append(STRLLNode* node, char data[]){
+void STRLL::Append(STRLLNode* node, char data[]){
   if(node->next == NULL){
     STRLLNode* newNode = new STRLLNode;
     newNode->data = new char[strlen(data) + 1];
@@ -74,10 +80,10 @@ void STRLLNode::Append(STRLLNode* node, char data[]){
     Append(node->next, data);
   }
 }
-void STRLLNode::DestroyThisList(){
-  DestroyList(this);
+void STRLL::DestroyThisList(){
+  DestroyList(head);
 }
-void STRLLNode::DestroyList(STRLLNode* node){
+void STRLL::DestroyList(STRLLNode* node){
   if(node == NULL){
     return;
   }
@@ -87,10 +93,10 @@ void STRLLNode::DestroyList(STRLLNode* node){
   delete[] node;
   node = NULL;
 }
-void STRLLNode::PrintNodes(){
-  PrintNodes(this);
+void STRLL::PrintNodes(){
+  PrintNodes(head);
 }
-void STRLLNode::PrintNodes(STRLLNode* node){
+void STRLL::PrintNodes(STRLLNode* node){
   if(node == NULL){
     return;
   }
@@ -98,11 +104,11 @@ void STRLLNode::PrintNodes(STRLLNode* node){
   PrintNodes(node->next);
 }
 
-int STRLLNode::AppendUnique(const char str[]){
+int STRLL::AppendUnique(const char str[]){
   char* strNonConst = (char*)str;
-  return AppendUnique(this, strNonConst);
+  return AppendUnique(head, strNonConst);
 }
-int STRLLNode::AppendUnique(STRLLNode* node, char str[]){
+int STRLL::AppendUnique(STRLLNode* node, char str[]){
   if(node == NULL){
     return 1; // Error code 1 == did not append.
   }
@@ -123,20 +129,20 @@ int STRLLNode::AppendUnique(STRLLNode* node, char str[]){
   AppendUnique(node->next, str);
 }
 
-void STRLLNode::MoveTailToHead(){
-  if(this == NULL or this->next == NULL){
+void STRLL::MoveTailToHead(){
+  if(head == NULL or head->next == NULL){
     // Nothing to move, list contains 1 node.
     return;
   }
 
-  STRLLNode* oldHead = this;
-  STRLLNode* secondToLast = GetSecondToLast(this);
+  STRLLNode* oldHead = head;
+  STRLLNode* secondToLast = GetSecondToLast(head);
   STRLLNode* newHead = secondToLast->next;
   secondToLast->next = NULL; // New end of list.
   newHead->next = oldHead;
-  this = newHead;
+  head = newHead;
 }
-STRLLNode* STRLLNode::GetSecondToLast(STRLLNode* node){
+STRLLNode* STRLL::GetSecondToLast(STRLLNode* node){
   // We know here that list has at least 2 nodes...
   if(node->next->next == NULL){
     return node;
