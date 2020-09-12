@@ -196,45 +196,85 @@ struct BST::LLNode* BST::GetLLTail(struct LLNode* head){
   return (GetLLTail(head->next));
 }
 
-BST BST::FromArray(int arr[], int len){
+BST BST::FromArray(int arr[]){
   BST newTree;
-  newTree.root = CreateRoot(arr, 0, (len - 1));
+  newTree.root = BuildTree(arr);
   return newTree;
 }
-struct BST::Node* BST::CreateRoot(int arr[], int start, int stop){
-  int mid;
-  if(stop % 2 != 0){
-    mid = (stop-1)/2;
+struct BST::Node* BST::BuildTree(int arr[]){
+  int len = strlen(arr);
+  if(len == 0){
+    // If USER passes empty array.
+    return NULL;
   }
-  else{
-    mid = stop/2;
+  if(len == 1){
+    struct Node* leaf = new Node;
+    leaf->data = arr[0];
+    return leaf;
+  }
+  
+  int rootLoc;
+  if(len % 2 == 0){ // Array len even.
+    rootLoc = len/2 - 1;
+  }
+  else{ // Odd.
+    rootLoc = (len - 1)/2;
   }
   struct Node* root = new Node;
-  root->data = arr[mid];
-  if(abs(start - stop) = 3){
-    // Base case, if range == 3 assemble height 2 baby tree:
-    root->left = new Node;
-    root->right = new Node;
-    root->left->data = arr[mid-1];
-    root->right->data = arr[mid+1];
-  }
-  if(abs(start - stop) = 2){
-    // Base case, range == 2 assemble height 2 baby tree:
-    int rootVal;
-    if(arr[mid
+  root->data = arr[rootLoc];
 
-    root->left = CreateRoot(arr, start, mid);
-    root->right = CreateRoot(arr, mid, stop);
-  }
-  else{
-    // range/dist <=3, so we must assemble a structure from this and return:
-    //
+  int lenLeftSubArr, lenRightSubArr;
+  lenLeftSubArr = rootLoc;
+  lenRightSubArr = len - rootLoc - 1;
+  char leftSubArr[lenLeftSubArr], rightSubArr[lenRightSubArr];
 
-
-    root->left = NULL;
-    root->right = NULL;
+  for(int i=0; i<lenLeftSubArr; i++){
+    leftSubArr[i] = arr[i];
   }
+  int j = rootLoc + 1;
+  for(int i=0; i<lenRightSubArr; i++){
+    rightSubArr[i] = arr[j];
+    j++;
+  }
+
+  root->left = BuildTree(leftSubArr);
+  root->right = BuildTree(rightSubArr);
+
   return root;
+
+//  int mid;
+//  if(stop % 2 != 0){
+//    mid = (stop-1)/2;
+//  }
+//  else{
+//    mid = stop/2;
+//  }
+//  struct Node* root = new Node;
+//  root->data = arr[mid];
+//  if(abs(start - stop) = 3){
+//    // Base case, if range == 3 assemble height 2 baby tree:
+//    root->left = new Node;
+//    root->right = new Node;
+//    root->left->data = arr[mid-1];
+//    root->right->data = arr[mid+1];
+//  }
+//  if(abs(start - stop) = 2){
+//    // Base case, range == 2 assemble height 2 baby tree:
+//    int rootVal;
+//    if(arr[mid
+//
+//    root->left = CreateRoot(arr, start, mid);
+//    root->right = CreateRoot(arr, mid, stop);
+//  }
+//  else{
+//    // range/dist <=3, so we must assemble a structure from this and return:
+//    //
+//
+//
+//    root->left = NULL;
+//    root->right = NULL;
+//  }
+//  return root;
 }
 
 void BST::PreOrderTraverse(){
