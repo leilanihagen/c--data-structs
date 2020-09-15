@@ -22,7 +22,11 @@ class BST{ // Rewrite class as a node type instead of having bst, then all funct
   struct BST::Node* Duplicate(struct Node* root); // Class not in scope until func. args.
   struct BST::LLNode* ToSortedLinkedList(struct Node* root);
   struct BST::LLNode* GetLLTail(struct LLNode* head);
-  struct BST::Node* BuildTree(int arr[]);
+  struct BST::Node* BuildFromArray(int arr[], int len);
+  int GetHeight(struct Node* node);
+  struct BST::Node* DeleteLargestNode(struct Node* node);
+  int CountX(struct Node* root, int x, int count);
+  int GetLowestCommonAnscestor(struct Node* root, struct Node* p, struct Node* q);
   void LRN(struct Node* root);
   void NLR(struct Node* root);
   void LNR(struct Node* root);
@@ -36,7 +40,10 @@ class BST{ // Rewrite class as a node type instead of having bst, then all funct
   int GetInOrderSuccessor();
   BST Duplicate();
   void PrintFromSortedLL();
-  BST FromArray(int arr[]);
+  BST FromArray(int arr[], int len);
+  int GetHeight();
+  void DeleteLargestNode();
+  int CountX(int x);
   void PostOrderTraverse();
   void PreOrderTraverse();
   void InOrderTraverse();

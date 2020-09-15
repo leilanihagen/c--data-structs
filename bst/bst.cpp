@@ -196,13 +196,13 @@ struct BST::LLNode* BST::GetLLTail(struct LLNode* head){
   return (GetLLTail(head->next));
 }
 
-BST BST::FromArray(int arr[]){
+BST BST::FromArray(int arr[], int len){
   BST newTree;
-  newTree.root = BuildTree(arr);
+  newTree.root = BuildFromArray(arr, len);
   return newTree;
 }
-struct BST::Node* BST::BuildTree(int arr[]){
-  int len = strlen(arr);
+struct BST::Node* BST::BuildFromArray(int arr[], int len){
+//  int len = sizeof(*arr)/sizeof(arr[0]);
   if(len == 0){
     // If USER passes empty array.
     return NULL;
@@ -220,13 +220,13 @@ struct BST::Node* BST::BuildTree(int arr[]){
   else{ // Odd.
     rootLoc = (len - 1)/2;
   }
-  struct Node* root = new Node;
+  struct Node* root = new struct Node;
   root->data = arr[rootLoc];
 
   int lenLeftSubArr, lenRightSubArr;
   lenLeftSubArr = rootLoc;
   lenRightSubArr = len - rootLoc - 1;
-  char leftSubArr[lenLeftSubArr], rightSubArr[lenRightSubArr];
+  int leftSubArr[lenLeftSubArr], rightSubArr[lenRightSubArr];
 
   for(int i=0; i<lenLeftSubArr; i++){
     leftSubArr[i] = arr[i];
@@ -237,8 +237,8 @@ struct BST::Node* BST::BuildTree(int arr[]){
     j++;
   }
 
-  root->left = BuildTree(leftSubArr);
-  root->right = BuildTree(rightSubArr);
+  root->left = BuildFromArray(leftSubArr, lenLeftSubArr);
+  root->right = BuildFromArray(rightSubArr, lenRightSubArr);
 
   return root;
 
@@ -277,6 +277,83 @@ struct BST::Node* BST::BuildTree(int arr[]){
 //  return root;
 }
 
+int BST::GetHeight(){
+  GetHeight(root);
+}
+int BST::GetHeight(struct Node* node){
+  if(node == NULL){
+    return 0;
+  }
+  int heightLeft = GetHeight(node->left);
+  int heightRight = GetHeight(node->right);
+  
+  int height;
+
+  if(heightLeft > heightRight){
+    height = 1 + heightLeft;
+  }
+  else{
+    height = 1 + heightRight;
+  }
+  
+  return height;
+}
+
+void BST::DeleteLargestNode(){
+  root = DeleteLargestNode(root);
+}
+struct BST::Node* BST::DeleteLargestNode(struct Node* node){
+  if(node == NULL){
+    return NULL;
+  }
+  if(node->right == NULL){
+    // Is largest node.
+    delete node;
+    return NULL;
+  }
+  node->right = DeleteLargestNode(node->right);
+  return node;
+}
+
+int BST::CountX(int x){
+  struct Node* node = new Node;
+  node->data = 7;
+
+  node->left = new Node;
+  node->left->data = 7;
+
+  node->left->left = new Node;
+  node->left->left->data = 7;
+  
+  node->right = new Node;
+  node->right->data = 16;
+
+  return CountX(node, 7, 0);
+}
+int BST::CountX(struct Node* node, int x, int count){
+  if(node == NULL){
+    return count;
+  }
+  
+  if(node->data == x){
+    count++;
+  }
+
+  count = CountX(node->left, x, count); // Passing count updated in count++ and updating...
+  count = CountX(node->right, x, count); // passing count updated after left child call above...
+  return count;
+}
+
+int BST::GetLowestCommonAncestor(struct Node* root, struct Node* p, struct Node* q){
+  if(root->data > p->data && root->data > q->data){
+    return GetLowestCommonAncestor(root->left, p, q);
+  }
+  if(root->data < p->data && root->data < q->data){
+    return GetLowestCommonAncestor(root->right, p, q);
+  }
+  // Must be current node:
+  return root->data;
+}
 void BST::PreOrderTraverse(){
   // Depth-first preorder traversal.
   NLR(root);

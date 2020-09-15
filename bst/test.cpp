@@ -16,9 +16,12 @@ int main(){
 
   int arr[] = {1,2,3,4,5,6,7,8,9};
   BST t2 = myTree.FromArray(arr, 9);
+  t2.InOrderTraverse();
+//  t2.DeleteLargestNode();
+//  t2.InOrderTraverse();
+  std::cout << std::endl << t2.CountX(7) << std::endl;
 
 //  BST myDupe = myTree.Duplicate();
-//  myDupe.InOrderTraverse();
 //  std::cout << myDupe.GetInOrderSuccessor() << std::endl;
 
 // myTree.Delete(3);
